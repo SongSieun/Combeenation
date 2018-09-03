@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ffd74a</color>
+    <color name="colorPrimaryDark">#8b572a</color>
+    <color name="colorAccent">#f9aa33</color>
+    <color name="text_color">#f5a623</color>
+    <color name="sign_up_text">#8b572a</color>
+    <color name="background">#ffd74a</color>
+    <color name="cancleButton">#cb8328</color>
+</resources>
