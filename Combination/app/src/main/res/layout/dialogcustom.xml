@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/add_menu"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/menu_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="Combination Name"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/material1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="material 1"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/material2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="material 2"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/material3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="material 4"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp"/>
+
+    <EditText
+        android:id="@+id/material4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="material 4"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/material5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="material 5"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/pic_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:hint="Add picture URL"
+        android:inputType="textShortMessage"
+        android:textColorHint="@color/text_color"
+        android:textSize="14sp" />
+
+</LinearLayout>
