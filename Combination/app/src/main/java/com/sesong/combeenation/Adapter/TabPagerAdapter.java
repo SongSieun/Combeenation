@@ -39,10 +39,10 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 tabName = "Food";
                 break;
             case 1:
-                tabName = "Travel";
+                tabName = "Beauty";
                 break;
             case 2:
-                tabName = "Beauty";
+                tabName = "Travel";
                 break;
         }
         return tabName;

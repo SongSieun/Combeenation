@@ -24,7 +24,7 @@
         android:layout_marginTop="10dp"
         android:hint="Combination Name"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
     <EditText
@@ -36,7 +36,7 @@
         android:layout_marginTop="10dp"
         android:hint="material 1"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
     <EditText
@@ -48,7 +48,7 @@
         android:layout_marginTop="10dp"
         android:hint="material 2"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
     <EditText
@@ -60,7 +60,7 @@
         android:layout_marginTop="10dp"
         android:hint="material 4"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp"/>
 
     <EditText
@@ -72,7 +72,7 @@
         android:layout_marginTop="10dp"
         android:hint="material 4"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
     <EditText
@@ -84,7 +84,7 @@
         android:layout_marginTop="10dp"
         android:hint="material 5"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
     <EditText
@@ -96,7 +96,7 @@
         android:layout_marginTop="10dp"
         android:hint="Add picture URL"
         android:inputType="textShortMessage"
-        android:textColorHint="@color/text_color"
+        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
 </LinearLayout>
