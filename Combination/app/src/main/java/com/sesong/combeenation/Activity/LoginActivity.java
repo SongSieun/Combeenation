@@ -33,20 +33,20 @@ public class LoginActivity extends AppCompatActivity {
         final EditText username_edit = (EditText) findViewById(R.id.username_edit);
         final EditText password_edit = (EditText) findViewById(R.id.password_edit);
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-                startActivity(intent);
-            }
-        });
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = username_edit.getText().toString();
                 String password = password_edit.getText().toString();
                 login(username, password);
+            }
+        });
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -62,6 +62,10 @@ public class LoginActivity extends AppCompatActivity {
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("Response (body)", String.valueOf(response.body()));
+                Log.d("Response (code)", String.valueOf(response.code()));
+                Log.d("Response (message)", String.valueOf(response.message()));
+                Log.d("Response (isSuccessful)", String.valueOf(response.isSuccessful()));
                 if (response.code() == 400) {
                     Log.d("Login", "failure ");
                     Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();

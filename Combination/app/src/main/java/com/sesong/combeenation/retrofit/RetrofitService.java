@@ -11,13 +11,13 @@ public interface RetrofitService {
     public static final String BASE_URL="https://papicochat.herokuapp.com/";
 
     @FormUrlEncoded
-    @POST("sign")
+    @POST("/users/signin")
     Call<JsonObject> getPost(
             @Field("username") String username,
             @Field("password") String password);
 
     @FormUrlEncoded
-    @POST("users")
+    @POST("/users/signup")
     Call<JsonObject> users(
             @Field("username") String username,
             @Field("password") String password);
@@ -27,6 +27,5 @@ public interface RetrofitService {
     Call<JsonObject> combinations(
             @Field("title") String title,
             @Field("content") String content,
-            @Field("imagePath") String image
-    );
+            @Field("imagePath") String image);
 }
