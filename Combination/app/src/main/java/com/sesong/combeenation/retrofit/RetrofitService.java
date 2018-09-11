@@ -12,15 +12,20 @@ public interface RetrofitService {
 
     @FormUrlEncoded
     @POST("/users/signin")
-    Call<JsonObject> getPost(
+    Call<JsonObject> signin(
             @Field("username") String username,
             @Field("password") String password);
 
     @FormUrlEncoded
     @POST("/users/signup")
-    Call<JsonObject> users(
+    Call<JsonObject> signup(
             @Field("username") String username,
             @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("/users/info")
+    Call<JsonObject> info(
+            @Field("token") String token);
 
     @FormUrlEncoded
     @POST("combinations")

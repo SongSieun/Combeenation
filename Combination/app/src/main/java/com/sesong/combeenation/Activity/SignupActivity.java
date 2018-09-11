@@ -48,11 +48,15 @@ public class SignupActivity extends AppCompatActivity {
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        Call<JsonObject> response = retrofitService.users(username, password);
+        Call<JsonObject> response = retrofitService.signup(username, password);
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 Log.d("Login", "Pass ");
+                Log.d("Response (body)", String.valueOf(response.body()));
+                Log.d("Response (code)", String.valueOf(response.code()));
+                Log.d("Response (message)", String.valueOf(response.message()));
+                Log.d("Response (isSuccessful)", String.valueOf(response.isSuccessful()));
                 Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                 startActivity(intent);
             }

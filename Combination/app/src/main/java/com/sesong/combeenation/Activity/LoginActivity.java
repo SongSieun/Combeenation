@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        Call<JsonObject> response = retrofitService.getPost(username, password);
+        Call<JsonObject> response = retrofitService.signin(username, password);
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -77,12 +77,14 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         JSONObject json = new JSONObject(String.valueOf(response.body()));
                         Log.d("JSONOBJECT   ", String.valueOf(json));
-                        JSONObject jObj = json.optJSONObject("token");
-                        Log.d("JSONOBJECT   _1   ", String.valueOf(jObj));
-                        String token_data = jObj.getString("data");
-                        Log.d("JSONOBJECT   _2   ", token_data);
+                        Boolean result_sucess = json.getBoolean("success");
+                        Log.d("JSONOBJECT_SUCCESS : ", String.valueOf(result_sucess));
+                        String result_message = json.getString("message");
+                        Log.d("JSONOBJECT_MESSAGE : ", result_message);
+                        String result_token = json.getString("token");
+                        Log.d("JSONOBJECT_TOKEN : ", result_token);
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("token", token_data);
+                        intent.putExtra("token", result_token);
                         startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();

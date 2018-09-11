@@ -85,10 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.menu_setting:
-                Intent intent1 = new Intent(MainActivity.this, SettingActivity.class);
-                startActivity(intent1);
-                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -11,10 +11,5 @@
         android:id="@+id/menu_mypage"
         android:icon="@drawable/ic_person_black_24dp"
         android:title="@string/my_page"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_setting"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="@string/settings"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>
