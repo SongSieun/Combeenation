@@ -8,4 +8,6 @@
     android:background="@android:color/white"
     tools:context=".Activity.MypageActivity">
 
+
+
 </android.support.constraint.ConstraintLayout>

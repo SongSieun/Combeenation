@@ -11,9 +11,12 @@
     <style name="AppTheme.Loading">
         <item name="windowNoTitle">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name="NoActionBarAppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+    <style name="NoActionBarAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
 
 
 </resources>

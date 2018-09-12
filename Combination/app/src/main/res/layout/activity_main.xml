@@ -13,7 +13,7 @@
         android:background="@color/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/Theme.AppCompat.Light"/>
+        app:popupTheme="@style/Theme.AppCompat.Light" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
@@ -44,6 +44,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_add_black_24dp"
         app:fabSize="auto"
         app:layout_constraintBottom_toBottomOf="parent"
