@@ -18,8 +18,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.TabPagerAdapter;
 import com.sesong.combeenation.R;
+import com.sesong.combeenation.retrofit.RetrofitService;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,20 +68,43 @@ public class MainActivity extends AppCompatActivity {
                         EditText material4 = (EditText) layout.findViewById(R.id.material4);
                         EditText material5 = (EditText) layout.findViewById(R.id.material5);
                         EditText editUrlPic = (EditText) layout.findViewById(R.id.pic_url);
-                        String MenuTitle = title.getText().toString();
+                        String menuTitle = title.getText().toString();
                         String totalMaterial = material1.getText().toString() + " + " +
                                 material2.getText().toString() + " + " +
                                 material3.getText().toString() + " + " +
                                 material4.getText().toString() + " + " +
                                 material5.getText().toString();
-                        String UrlPic = editUrlPic.getText().toString();
-                        Log.d("MenuTitle : ", MenuTitle);
+                        String urlPic = editUrlPic.getText().toString();
+                        Log.d("menuTitle : ", menuTitle);
                         Log.d("totalMaterial : ", totalMaterial);
-                        Log.d("UrlPic", UrlPic);
+                        Log.d("urlPic", urlPic);
+                        addMenu(menuTitle, totalMaterial, urlPic);
                     }
                 });
                 builder.setNegativeButton("취소", null);
                 builder.create().show();
+            }
+        });
+    }
+
+    public void addMenu(String title, String content, String imagePath) {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(RetrofitService.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitService retrofitService = retrofit.create(RetrofitService.class);
+        Call<JsonObject> response = retrofitService.combinations(title, content, imagePath);
+        response.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                JsonObject repo = response.body();
+                Log.d("response : ", String.valueOf(repo));
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
             }
         });
     }
