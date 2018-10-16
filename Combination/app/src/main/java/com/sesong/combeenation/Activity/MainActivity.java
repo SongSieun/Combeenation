@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        Call<JsonObject> response = retrofitService.combinations(title, content, imagePath);
+        final Call<JsonObject> response = retrofitService.combinations(title, content, imagePath);
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                Log.d("addMenu Failed!!!", String.valueOf(response));
             }
         });
     }

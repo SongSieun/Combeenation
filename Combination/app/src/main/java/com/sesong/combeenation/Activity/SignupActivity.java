@@ -32,16 +32,16 @@ public class SignupActivity extends AppCompatActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String ID = id_edit.getText().toString();
+                String Id = id_edit.getText().toString();
                 String Password_e = pass_edit.getText().toString();
-                Log.d("ID : ", ID);
-                Log.d("PassWord : ", Password_e);
-                signup(ID, Password_e);
+                Log.d("ID", Id);
+                Log.d("PassWord", Password_e);
+                signUp(Id, Password_e);
             }
         });
     }
 
-    public void signup(String username, String password) {
+    public void signUp(String username, String password) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
