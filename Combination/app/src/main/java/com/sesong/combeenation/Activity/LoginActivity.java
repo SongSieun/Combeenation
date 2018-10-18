@@ -1,7 +1,9 @@
 package com.sesong.combeenation.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +25,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
+    private SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         final EditText username_edit = (EditText) findViewById(R.id.username_edit);
         final EditText password_edit = (EditText) findViewById(R.id.password_edit);
 
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void login(String username, String password) {
+    public void login(String username, final String password) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -71,28 +75,27 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "아이디 또는 비밀번호를 확인해주세요", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d("Login", "Pass ");
-                    //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    //startActivity(intent);
-                    JsonObject repo = response.body();
+                    JSONObject repo = null;
                     try {
-                        JSONObject json = new JSONObject(String.valueOf(response.body()));
-                        Log.d("JSONOBJECT   ", String.valueOf(json));
-                        Boolean result_sucess = json.getBoolean("success");
-                        Log.d("JSONOBJECT_SUCCESS : ", String.valueOf(result_sucess));
-                        String result_message = json.getString("message");
-                        Log.d("JSONOBJECT_MESSAGE : ", result_message);
-                        String result_token = json.getString("token");
-                        Log.d("JSONOBJECT_TOKEN : ", result_token);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("token", result_token);
-                        startActivity(intent);
+                        repo = new JSONObject(String.valueOf(response.body()));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    //Log.d("responselog", String.valueOf(repo));
-                    //JsonObject data = repo.getAsJsonObject("token").getAsJsonObject("data");
-                    //String jsondata = String.valueOf(data);
-                    //Log.d("jsondata    ", jsondata);
+                    String data = null;
+                    if (repo != null) {
+                        try {
+                            data = repo.getString("token");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    String jsondata = String.valueOf(data);
+                    Log.d("jsondata    ", jsondata);
+
+                    // SharedPreference에 데이터 저장
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("token", jsondata);
+                    editor.apply();
                 }
             }
 
