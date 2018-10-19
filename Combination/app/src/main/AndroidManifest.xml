@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sesong.combeenation">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,11 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity"/>
-        <activity android:name=".Activity.LoginActivity"/>
-        <activity android:name=".Activity.SignupActivity"/>
-        <activity android:name=".Activity.MypageActivity"/>
-        <activity android:name=".Activity.SettingActivity"/>
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.SignupActivity" />
+        <activity android:name=".Activity.MypageActivity" />
+        <activity android:name=".Activity.SettingActivity" />
     </application>
 
 </manifest>

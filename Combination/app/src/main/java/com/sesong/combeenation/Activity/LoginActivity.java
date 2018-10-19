@@ -96,12 +96,14 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("token", jsondata);
                     editor.apply();
+                    Intent intent = new Intent(LoginActivity.this, MypageActivity.class);
+                    startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                Log.d("Server connect Error ", String.valueOf(t));
             }
         });
     }
