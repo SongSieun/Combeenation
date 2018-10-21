@@ -26,15 +26,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ImageButton loginButton = (ImageButton) findViewById(R.id.loginbutton);
-        ImageButton signupButton = (ImageButton) findViewById(R.id.signupButton);
-        final EditText username_edit = (EditText) findViewById(R.id.username_edit);
-        final EditText password_edit = (EditText) findViewById(R.id.password_edit);
+        ImageButton loginButton = findViewById(R.id.loginbutton);
+        ImageButton signupButton = findViewById(R.id.signupButton);
+        final EditText username_edit = findViewById(R.id.username_edit);
+        final EditText password_edit = findViewById(R.id.password_edit);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -96,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("token", jsondata);
                     editor.apply();
+
                     Intent intent = new Intent(LoginActivity.this, MypageActivity.class);
                     startActivity(intent);
                 }

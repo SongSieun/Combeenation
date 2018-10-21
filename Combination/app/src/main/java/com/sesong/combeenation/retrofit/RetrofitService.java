@@ -14,14 +14,12 @@ public interface RetrofitService {
     public static final String BASE_URL="https://combeenation.herokuapp.com";
 
     @FormUrlEncoded
-    //@Headers("Content-Type : application/json")
     @POST("/users/login")
     Call<JsonObject> signin(
             @Field("username") String username,
             @Field("password") String password);
 
     @FormUrlEncoded
-    //@Headers("Content-Type : application/json")
     @POST("/users/join")
     Call<JsonObject> signup(
             @Field("username") String username,
