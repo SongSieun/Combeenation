@@ -16,12 +16,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.TabPagerAdapter;
 import com.sesong.combeenation.R;
 import com.sesong.combeenation.retrofit.RetrofitService;
+
+import java.io.File;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,28 +34,37 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
     private String TAG = "TAG";
+    private Toolbar myToolbar;
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
+    String token;
+
+    private final int GALLERY_CODE = 1112;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = findViewById(R.id.pager);
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
+        tabLayout = findViewById(R.id.tab);
         tabLayout.setupWithViewPager(viewPager);
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
         final View layout = inflater.inflate(R.layout.dialogcustom, (ViewGroup) findViewById(R.id.layout_root));
+
+        Intent intent = getIntent();
+        token = intent.getStringExtra("token");
+        Log.d("Main token ", token);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,24 +74,40 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton("추가", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        EditText title = (EditText) layout.findViewById(R.id.menu_name);
-                        EditText material1 = (EditText) layout.findViewById(R.id.material1);
-                        EditText material2 = (EditText) layout.findViewById(R.id.material2);
-                        EditText material3 = (EditText) layout.findViewById(R.id.material3);
-                        EditText material4 = (EditText) layout.findViewById(R.id.material4);
-                        EditText material5 = (EditText) layout.findViewById(R.id.material5);
-                        EditText editUrlPic = (EditText) layout.findViewById(R.id.pic_url);
+                        EditText title = layout.findViewById(R.id.menu_name);
+                        EditText material1 = layout.findViewById(R.id.material1);
+                        EditText material2 = layout.findViewById(R.id.material2);
+                        EditText material3 = layout.findViewById(R.id.material3);
+                        Button imageSearchBtn = layout.findViewById(R.id.search_image_button);
+                        RadioGroup radioGroup = layout.findViewById(R.id.radio_group);
+                        String contentType = null;
+                        int checkedId = radioGroup.getCheckedRadioButtonId();
+                        switch (checkedId) {
+                            case R.id.radio_food:
+                                contentType = "food";
+                                break;
+                            case R.id.radio_beauty:
+                                contentType = "beauty";
+                                break;
+                            case R.id.radio_travel:
+                                contentType = "trip";
+                                break;
+                        }
+                        Log.d("contentType ", contentType);
                         String menuTitle = title.getText().toString();
                         String totalMaterial = material1.getText().toString() + " + " +
                                 material2.getText().toString() + " + " +
-                                material3.getText().toString() + " + " +
-                                material4.getText().toString() + " + " +
-                                material5.getText().toString();
-                        String urlPic = editUrlPic.getText().toString();
+                                material3.getText().toString();
+                        imageSearchBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent galleryIntent = new Intent(MainActivity.this, GalleryActivity.class);
+                                startActivity(galleryIntent);
+                            }
+                        });
                         Log.d("menuTitle : ", menuTitle);
                         Log.d("totalMaterial : ", totalMaterial);
-                        Log.d("urlPic", urlPic);
-                        addMenu(menuTitle, totalMaterial, urlPic);
+                        //addMenu(menuTitle, totalMaterial, file, contentType);
                     }
                 });
                 builder.setNegativeButton("취소", null);
@@ -86,20 +115,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+/*
 
-    public void addMenu(String title, String content, String imagePath) {
+    public void addMenu(String name, String combination, File image, String type) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        final Call<JsonObject> response = retrofitService.combinations(title, content, imagePath);
+        final Call<JsonObject> response = retrofitService.combinations(token, name, image, combination, type);
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject repo = response.body();
-                Log.d("response : ", String.valueOf(repo));
+                Log.d("Response (body)", String.valueOf(response.body()));
+                Log.d("Response (code)", String.valueOf(response.code()));
+                Log.d("Response (message)", String.valueOf(response.message()));
+                Log.d("Response (isSuccessful)", String.valueOf(response.isSuccessful()));
             }
 
             @Override
@@ -108,12 +140,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_mypage:
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent = new Intent(this, MypageActivity.class);
+                intent.putExtra("token", token);
                 startActivity(intent);
                 return true;
         }

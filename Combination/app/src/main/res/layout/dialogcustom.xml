@@ -61,42 +61,52 @@
         android:hint="material 4"
         android:inputType="textShortMessage"
         android:textColorHint="#f5a623"
-        android:textSize="14sp"/>
-
-    <EditText
-        android:id="@+id/material4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="material 4"
-        android:inputType="textShortMessage"
-        android:textColorHint="#f5a623"
         android:textSize="14sp" />
 
-    <EditText
-        android:id="@+id/material5"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/search_image_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="material 5"
-        android:inputType="textShortMessage"
-        android:textColorHint="#f5a623"
-        android:textSize="14sp" />
+        android:layout_gravity="center"
+        android:text="이미지 찾아보기"
+        android:theme="@style/PrimaryFlatButton" />
 
-    <EditText
-        android:id="@+id/pic_url"
+    <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:hint="Add picture URL"
-        android:inputType="textShortMessage"
-        android:textColorHint="#f5a623"
-        android:textSize="14sp" />
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="food"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#f5a623" />
+
+        <RadioButton
+            android:id="@+id/radio_beauty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="beauty"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#f5a623" />
+
+        <RadioButton
+            android:id="@+id/radio_travel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="travel"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="#f5a623" />
+    </RadioGroup>
 
 </LinearLayout>

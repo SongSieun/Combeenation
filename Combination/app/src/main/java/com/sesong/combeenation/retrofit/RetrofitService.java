@@ -2,16 +2,21 @@ package com.sesong.combeenation.retrofit;
 
 import com.google.gson.JsonObject;
 
+import java.io.File;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface RetrofitService {
-    public static final String BASE_URL="https://combeenation.herokuapp.com";
+    public static final String BASE_URL = "https://combeenation.herokuapp.com";
 
     @FormUrlEncoded
     @POST("/users/login")
@@ -25,15 +30,16 @@ public interface RetrofitService {
             @Field("username") String username,
             @Field("password") String password);
 
-    @FormUrlEncoded
     @GET("/users/info")
     Call<JsonObject> info(
             @Header("token") String token);
 
-    @FormUrlEncoded
-    @POST("combination")
+    @Multipart
+    @POST("/combination")
     Call<JsonObject> combinations(
-            @Field("title") String title,
-            @Field("content") String content,
-            @Field("imagePath") String image);
+            @Header("token") String token,
+            @Part("name") RequestBody name,
+            @Part("image") RequestBody image,
+            @Part("combination") RequestBody combination,
+            @Part("type") RequestBody type);
 }

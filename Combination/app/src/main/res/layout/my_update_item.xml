@@ -30,7 +30,7 @@
                 android:padding="16dp"
                 android:text="Title"
                 android:textColor="#ffffff"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
         </RelativeLayout>
 
         <TextView

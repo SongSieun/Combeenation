@@ -4,4 +4,8 @@
     <style name="EditTextTheme">
         <item name="android:colorControlNormal">@color/text_color</item>
     </style>
+
+    <style name="NoActionBarAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+    </style>
 </resources>

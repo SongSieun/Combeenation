@@ -3,7 +3,6 @@ package com.sesong.combeenation.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,17 @@ public class LoginActivity extends AppCompatActivity {
         final EditText username_edit = findViewById(R.id.username_edit);
         final EditText password_edit = findViewById(R.id.password_edit);
 
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        // SharedPreference에 데이터 저장
+        //preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = getSharedPreferences("token", MODE_PRIVATE);
+        String token = preferences.getString("token", null);
+        if (token != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("token", token);
+            startActivity(intent);
+        }
+        editor = preferences.edit();
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,14 +101,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
                     String jsondata = String.valueOf(data);
+                    Log.d("before data ", data);
                     Log.d("jsondata    ", jsondata);
 
-                    // SharedPreference에 데이터 저장
-                    SharedPreferences.Editor editor = preferences.edit();
                     editor.putString("token", jsondata);
                     editor.apply();
 
-                    Intent intent = new Intent(LoginActivity.this, MypageActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.putExtra("token", jsondata);
                     startActivity(intent);
                 }
             }
