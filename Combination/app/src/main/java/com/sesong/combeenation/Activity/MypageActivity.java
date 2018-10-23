@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.JsonObject;
@@ -31,11 +33,14 @@ public class MypageActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private String token;
     private TextView usernameText;
+    private ImageView settingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
+
+        settingView = findViewById(R.id.imageView4);
 
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
@@ -57,6 +62,14 @@ public class MypageActivity extends AppCompatActivity {
         // 어댑터 설정
         UpdateRecyclerAdapter adapter = new UpdateRecyclerAdapter(dataList);
         recyclerView.setAdapter(adapter);
+
+        settingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent settingIntent = new Intent(MypageActivity.this, SettingActivity.class);
+                startActivity(settingIntent);
+            }
+        });
 
         getUserInfo(token);
     }

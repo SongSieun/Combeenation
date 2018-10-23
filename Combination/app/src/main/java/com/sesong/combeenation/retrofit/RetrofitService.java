@@ -4,7 +4,9 @@ import com.google.gson.JsonObject;
 
 import java.io.File;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -36,10 +38,14 @@ public interface RetrofitService {
 
     @Multipart
     @POST("/combination")
-    Call<JsonObject> combinations(
+    Call<ResponseBody> combinations(
             @Header("token") String token,
             @Part("name") RequestBody name,
-            @Part("image") RequestBody image,
+            @Part("file") MultipartBody.Part file,
             @Part("combination") RequestBody combination,
             @Part("type") RequestBody type);
+
+    @GET("/combinations/type/{type}")
+    Call<JsonObject> getContent(
+            @Header("token") String token);
 }

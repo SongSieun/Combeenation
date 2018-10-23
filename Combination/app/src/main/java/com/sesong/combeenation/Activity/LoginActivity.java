@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.google.gson.JsonObject;
 import com.sesong.combeenation.R;
+import com.sesong.combeenation.TokenData;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
 import org.json.JSONException;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         //preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences = getSharedPreferences("token", MODE_PRIVATE);
         String token = preferences.getString("token", null);
+        ((TokenData) this.getApplication()).setToken(token);
         if (token != null) {
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("token", token);

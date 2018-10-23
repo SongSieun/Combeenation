@@ -22,6 +22,16 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/picture" />
 
+            <ImageButton
+                android:id="@+id/shard_button"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="8dp"
+                android:background="#00ffffff"
+                android:src="@drawable/ic_favorite_black_24dp" />
+
             <TextView
                 android:id="@+id/title_text"
                 android:layout_width="wrap_content"
@@ -33,32 +43,19 @@
                 android:textSize="24sp" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/content_text"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Contents" />
+            android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <ImageButton
-                android:id="@+id/shard_button"
+            <TextView
+                android:id="@+id/content_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#00ffffff"
-                android:src="@drawable/ic_favorite_black_24dp" />
-
-            <Button
-                android:id="@+id/more_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#00ffffff"
-                android:text="learn more"
-                android:textColor="#f5a623" />
-        </LinearLayout>
+                android:layout_alignParentLeft="true"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:text="Contents" />
+        </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
