@@ -1,5 +1,6 @@
 package com.sesong.combeenation.retrofit;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface RetrofitService {
     public static final String BASE_URL = "https://combeenation.herokuapp.com";
@@ -46,6 +48,7 @@ public interface RetrofitService {
             @Part("type") RequestBody type);
 
     @GET("/combinations/type/{type}")
-    Call<JsonObject> getContent(
-            @Header("token") String token);
+    Call<JsonArray> getContent(
+            @Header("token") String token,
+            @Path("type") String type);
 }

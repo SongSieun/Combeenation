@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity {
         token = intent.getStringExtra("token");
         Log.d("Main token ", token);
 
-        Intent tokenIntent = new Intent(MainActivity.this,FoodFragment.class);
-        intent.putExtra("FoodToken",token);
-        startActivity(tokenIntent);
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

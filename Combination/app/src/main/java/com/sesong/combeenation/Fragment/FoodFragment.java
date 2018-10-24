@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.MyRecyclerAdapter;
 import com.sesong.combeenation.R;
@@ -42,17 +43,17 @@ public class FoodFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        List<CardItem> dataList = new ArrayList<>();
+        /*List<CardItem> dataList = new ArrayList<>();
         dataList.add(new CardItem("간단야식 밴쯔정식", "조각피자 + 훈제 닭다리 + 스트링치즈 + 편의점 떡볶이"));
         dataList.add(new CardItem("편의점 마크정식", "스파게티 라면 + 편의점 떡볶이 + 마늘후랑크 + 소시지 + 치즈"));
-        dataList.add(new CardItem("간단야식 밴쯔정식", "조각피자 + 훈제 닭다리 + 스트링치즈 + 편의점 떡볶이"));
+        dataList.add(new CardItem("간단야식 밴쯔정식", "조각피자 + 훈제 닭다리 + 스트링치즈 + 편의점 떡볶이"));*/
 
         String token = ((TokenData) getActivity().getApplication()).getToken();
         Log.d("Food Fragment token ", token);
         addMenu(token);
 
-        MyRecyclerAdapter adapter = new MyRecyclerAdapter(dataList);
-        recyclerView.setAdapter(adapter);
+        /*MyRecyclerAdapter adapter = new MyRecyclerAdapter(dataList);
+        recyclerView.setAdapter(adapter);*/
         return view;
     }
 
@@ -63,10 +64,10 @@ public class FoodFragment extends Fragment {
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        final Call<JsonObject> response = retrofitService.getContent(token);
-        response.enqueue(new Callback<JsonObject>() {
+        final Call<JsonArray> response = retrofitService.getContent(token, "food");
+        response.enqueue(new Callback<JsonArray>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 Log.d("Response (body)", String.valueOf(response.body()));
                 Log.d("Response (code)", String.valueOf(response.code()));
                 Log.d("Response (message)", String.valueOf(response.message()));
@@ -74,7 +75,7 @@ public class FoodFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<JsonArray> call, Throwable t) {
                 Log.d("addMenu Failed!!!", String.valueOf(response));
                 t.printStackTrace();
             }
