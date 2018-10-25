@@ -25,18 +25,10 @@
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.SignupActivity" />
         <activity android:name=".Activity.MypageActivity" />
-        <activity android:name=".Activity.SettingActivity" />
         <activity android:name=".Activity.GalleryActivity" />
         <activity android:name=".Activity.AddMenuActivity" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.sesong.combeenation.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
+        <activity android:name=".Activity.SettingsActivity" />
+        <activity android:name=".Activity.DeveloperActivity"></activity>
     </application>
+
 </manifest>

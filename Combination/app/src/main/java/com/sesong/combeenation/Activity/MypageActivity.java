@@ -66,7 +66,7 @@ public class MypageActivity extends AppCompatActivity {
         settingView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent settingIntent = new Intent(MypageActivity.this, SettingActivity.class);
+                Intent settingIntent = new Intent(MypageActivity.this, SettingsActivity.class);
                 startActivity(settingIntent);
             }
         });
