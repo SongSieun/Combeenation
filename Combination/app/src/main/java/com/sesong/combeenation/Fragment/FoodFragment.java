@@ -43,10 +43,10 @@ public class FoodFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
-        /*List<CardItem> dataList = new ArrayList<>();
+        List<CardItem> dataList = new ArrayList<>();
         dataList.add(new CardItem("간단야식 밴쯔정식", "조각피자 + 훈제 닭다리 + 스트링치즈 + 편의점 떡볶이"));
         dataList.add(new CardItem("편의점 마크정식", "스파게티 라면 + 편의점 떡볶이 + 마늘후랑크 + 소시지 + 치즈"));
-        dataList.add(new CardItem("간단야식 밴쯔정식", "조각피자 + 훈제 닭다리 + 스트링치즈 + 편의점 떡볶이"));*/
+        dataList.add(new CardItem("간단야식 밴쯔정식", "조각피자 + 훈제 닭다리 + 스트링치즈 + 편의점 떡볶이"));
 
         /*String token = ((TokenData) getActivity().getApplication()).getToken();
         Log.d("Food Fragment token ", token);
