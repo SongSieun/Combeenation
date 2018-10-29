@@ -2,82 +2,68 @@ package com.sesong.combeenation.Activity;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
-
 import com.sesong.combeenation.R;
+import com.sesong.combeenation.databinding.ActivityAddmenuBinding;
+
+import java.io.ByteArrayOutputStream;
+import static android.graphics.Bitmap.*;
 
 public class AddMenuActivity extends AppCompatActivity {
-    private EditText title, content1, content2, content3, content4;
-    private Button searchImage, returnBtn, okBtn;
-    private RadioGroup radioGroup;
-    private String menuTitle, menuContent, menuType, imagePath;
+    private String menuTitle, menuContent, menuType, imageString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addmenu);
+        final ActivityAddmenuBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_addmenu);
 
-        title = findViewById(R.id.menu_name);
-        content1 = findViewById(R.id.material1);
-        content2 = findViewById(R.id.material2);
-        content3 = findViewById(R.id.material3);
-        content4 = findViewById(R.id.material4);
-        radioGroup = findViewById(R.id.radio_group);
-        searchImage = findViewById(R.id.search_image_button);
-        returnBtn = findViewById(R.id.returnbtn);
-        okBtn = findViewById(R.id.okbtn);
-
-        searchImage.setOnClickListener(new View.OnClickListener() {
+        binding.searchImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
-                startActivityForResult(intent, 3000);*/
-                Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                getIntent.setType("image/*");
-
-                Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                pickIntent.setType("image/*");
-
-                Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
-
-                startActivityForResult(chooserIntent, 7000);
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                Log.d("AddMenuIntent  ", String.valueOf(intent));
+                startActivityForResult(intent, 7000);
             }
         });
-        returnBtn.setOnClickListener(new View.OnClickListener() {
+        binding.returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        okBtn.setOnClickListener(new View.OnClickListener() {
+        binding.okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menuTitle = title.getText().toString();
-                menuContent = content1.getText().toString() + " + " +
-                        content2.getText().toString() + " + " +
-                        content3.getText().toString() + " + " +
-                        content4.getText().toString();
+                menuTitle = binding.menuTitle.getText().toString();
+                menuContent = binding.material1.getText().toString() + " + " +
+                        binding.material2.getText().toString() + " + " +
+                        binding.material3.getText().toString() + " + " +
+                        binding.material4.getText().toString();
 
                 Intent resultAddIntent = new Intent();
                 resultAddIntent.putExtra("menuTitle", menuTitle);
                 resultAddIntent.putExtra("menuContent", menuContent);
                 resultAddIntent.putExtra("menuType", menuType);
-                resultAddIntent.putExtra("imagePath", imagePath);
+                resultAddIntent.putExtra("imageString", imageString);
                 setResult(RESULT_OK, resultAddIntent);
                 finish();
             }
         });
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        binding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
@@ -100,20 +86,70 @@ public class AddMenuActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 7000:
-                    //imagePath = data.getStringExtra("resultPath");
-
-                    Uri selectedImage = data.getData();
-                    String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-                    cursor.moveToFirst();
-
-                    int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-                    imagePath = cursor.getString(columnIndex);
-                    cursor.close();
-                    Log.d("imagePath ", imagePath);
+                    String finalImageString = sendPicture(data.getData()); //갤러리에서 가져오기
+                    Log.d("AddMenuIntentData  ", finalImageString);
                     break;
             }
         }
+    }
+
+    private String sendPicture(Uri imgUri) {
+        String imagePath = getRealPathFromURI(imgUri); // path 경로
+        Log.d("AddMenuRealPath  ", imagePath);
+        //경로를 통해 비트맵으로 전환
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        Log.d("AddMenuBitmap  ", String.valueOf(bitmap));
+        imageString = getStringFromBitmap(bitmap);
+        Log.d("AddMenuLog  ", imageString);
+
+        return imageString;
+    }
+
+    // 비트맵 -> 스트링
+    private String getStringFromBitmap(Bitmap bitmapPicture) {
+        final int COMPRESSION_QUALITY = 100;
+        String encodedImage;
+        ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
+        bitmapPicture.compress(CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
+        byte[] b = byteArrayBitmapStream.toByteArray();
+        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encodedImage;
+    }
+
+    private Bitmap getBitmapFromString(String jsonString) {
+        byte[] decodedString = Base64.decode(jsonString, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
+    }
+
+    private int exifOrientationToDegrees(int exifOrientation) {
+        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
+            return 90;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
+            return 180;
+        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
+            return 270;
+        }
+        return 0;
+    }
+
+    private Bitmap rotate(Bitmap src, float degree) {
+        // Matrix 객체 생성
+        Matrix matrix = new Matrix();
+        // 회전 각도 셋팅
+        matrix.postRotate(degree);
+        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
+        return createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
+    }
+
+    private String getRealPathFromURI(Uri contentUri) {
+        int column_index = 0;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        }
+
+        return cursor.getString(column_index);
     }
 }

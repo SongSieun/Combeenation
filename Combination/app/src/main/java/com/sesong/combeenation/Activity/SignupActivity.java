@@ -1,6 +1,7 @@
 package com.sesong.combeenation.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 
 import com.google.gson.JsonObject;
 import com.sesong.combeenation.R;
+import com.sesong.combeenation.databinding.ActivitySignupBinding;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
 import retrofit2.Call;
@@ -22,18 +24,13 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        final ActivitySignupBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
 
-        ImageButton signupButton = (ImageButton)findViewById(R.id.signupbutton);
-        final EditText id_edit = (EditText)findViewById(R.id.username_edit);
-        final EditText pass_edit = (EditText)findViewById(R.id.Password_edit);
-
-
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Id = id_edit.getText().toString();
-                String Password_e = pass_edit.getText().toString();
+                String Id = binding.idEdit.getText().toString();
+                String Password_e = binding.passEdit.getText().toString();
                 Log.d("ID", Id);
                 Log.d("PassWord", Password_e);
                 signUp(Id, Password_e);
@@ -68,4 +65,3 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 }
-

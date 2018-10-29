@@ -38,17 +38,17 @@ public interface RetrofitService {
     Call<JsonObject> info(
             @Header("token") String token);
 
-    @Multipart
+    @FormUrlEncoded
     @POST("/combination")
-    Call<ResponseBody> combinations(
+    Call<JsonObject> combinations(
             @Header("token") String token,
-            @Part("name") RequestBody name,
-            @Part("file") MultipartBody.Part file,
-            @Part("combination") RequestBody combination,
-            @Part("type") RequestBody type);
+            @Field("name") String name,
+            @Field("image") String image,
+            @Field("combination") String combination,
+            @Field("type") String type);
 
     @GET("/combinations/type/{type}")
-    Call<JsonArray> getContent(
+    Call<JsonObject> getContent(
             @Header("token") String token,
             @Path("type") String type);
 }

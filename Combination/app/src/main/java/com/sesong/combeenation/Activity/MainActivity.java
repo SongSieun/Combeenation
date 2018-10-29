@@ -1,6 +1,7 @@
 package com.sesong.combeenation.Activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,8 @@ import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.TabPagerAdapter;
 import com.sesong.combeenation.Fragment.FoodFragment;
 import com.sesong.combeenation.R;
+import com.sesong.combeenation.TokenData;
+import com.sesong.combeenation.databinding.ActivityMainBinding;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
 import java.io.File;
@@ -34,33 +37,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
-    private Toolbar myToolbar;
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    private String menuTitle, menuContent, menuType, token, imagePath;
+    private String menuTitle, menuContent, menuType, token, imageString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        setSupportActionBar(binding.myToolbar);
 
-        viewPager = findViewById(R.id.pager);
         TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(adapter);
+        binding.viewPager.setAdapter(adapter);
 
-        tabLayout = findViewById(R.id.tab);
-        tabLayout.setupWithViewPager(viewPager);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.fab);
+        token = TokenData.getInstance().getToken();
 
-        Intent intent = getIntent();
-        token = intent.getStringExtra("token");
-        Log.d("Main token ", token);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goAddMenu = new Intent(MainActivity.this, AddMenuActivity.class);
@@ -70,32 +63,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addMenu(String name, String image, String combination, String type) {
-        RequestBody requestName = RequestBody.create(okhttp3.MultipartBody.FORM, name);
-        RequestBody requestCombination = RequestBody.create(okhttp3.MultipartBody.FORM, combination);
-        RequestBody requestType = RequestBody.create(okhttp3.MultipartBody.FORM, type);
-
-        File file = new File(image);
-        RequestBody reqFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        MultipartBody.Part multipartFile = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        final Call<ResponseBody> response = retrofitService.combinations(token, requestName, multipartFile, requestCombination, requestType);
-        response.enqueue(new Callback<ResponseBody>() {
+        final Call<JsonObject> response = retrofitService.combinations(token, name, image, combination, type);
+        response.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d("Response (body)", String.valueOf(response.body()));
-                Log.d("Response (code)", String.valueOf(response.code()));
-                Log.d("Response (message)", String.valueOf(response.message()));
-                Log.d("Response (isSuccessful)", String.valueOf(response.isSuccessful()));
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.d("MAResponse (body)", String.valueOf(response.body()));
+                Log.d("MAResponse (code)", String.valueOf(response.code()));
+                Log.d("MAResponse (message)", String.valueOf(response.message()));
+                Log.d("MAResponse (isSucce)", String.valueOf(response.isSuccessful()));
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.d("addMenu Failed!!!", String.valueOf(response));
                 t.printStackTrace();
             }
@@ -110,12 +95,12 @@ public class MainActivity extends AppCompatActivity {
                     menuTitle = data.getStringExtra("menuTitle");
                     menuContent = data.getStringExtra("menuContent");
                     menuType = data.getStringExtra("menuType");
-                    imagePath = data.getStringExtra("imagePath");
+                    imageString = data.getStringExtra("imageString");
                     Log.d("menuTitleMaIn ", menuTitle);
                     Log.d("menuContentMaIn ", menuContent);
                     Log.d("menuTypeMaIn ", menuType);
-                    Log.d("imagePathMaIn ", imagePath);
-                    addMenu(menuTitle, imagePath, menuContent, menuType);
+                    Log.d("imagePathMaIn ", imageString);
+                    addMenu(menuTitle, imageString, menuContent, menuType);
 
                     break;
             }
@@ -127,7 +112,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_mypage:
                 Intent intent = new Intent(this, MypageActivity.class);
-                intent.putExtra("token", token);
                 startActivity(intent);
                 return true;
         }

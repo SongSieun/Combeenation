@@ -2,6 +2,8 @@ package com.sesong.combeenation.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
+import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.sesong.combeenation.R;
 import com.sesong.combeenation.TokenData;
+import com.sesong.combeenation.databinding.ActivityLoginBinding;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
 import org.json.JSONException;
@@ -31,35 +34,30 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        ImageButton loginButton = findViewById(R.id.loginbutton);
-        ImageButton signupButton = findViewById(R.id.signupButton);
-        final EditText username_edit = findViewById(R.id.username_edit);
-        final EditText password_edit = findViewById(R.id.password_edit);
+        final ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
         // SharedPreference에 데이터 저장
         //preferences = PreferenceManager.getDefaultSharedPreferences(this);
         preferences = getSharedPreferences("token", MODE_PRIVATE);
         String token = preferences.getString("token", null);
-        ((TokenData) this.getApplication()).setToken(token);
+
         if (token != null) {
+            TokenData.getInstance().setToken(token);
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("token", token);
             startActivity(intent);
         }
         editor = preferences.edit();
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        binding.loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = username_edit.getText().toString();
-                String password = password_edit.getText().toString();
+                String username = binding.usernameEdit.getText().toString();
+                String password = binding.passwordEdit.getText().toString();
                 login(username, password);
             }
         });
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        binding.signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
@@ -109,8 +107,9 @@ public class LoginActivity extends AppCompatActivity {
                     editor.putString("token", jsondata);
                     editor.apply();
 
+                    TokenData.getInstance().setToken(jsondata);
+
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.putExtra("token", jsondata);
                     startActivity(intent);
                 }
             }

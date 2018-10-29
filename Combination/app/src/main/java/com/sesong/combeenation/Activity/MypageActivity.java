@@ -2,6 +2,7 @@ package com.sesong.combeenation.Activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.UpdateRecyclerAdapter;
 import com.sesong.combeenation.R;
+import com.sesong.combeenation.TokenData;
+import com.sesong.combeenation.databinding.ActivityMypageBinding;
 import com.sesong.combeenation.item.CardItem;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
@@ -30,23 +33,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MypageActivity extends AppCompatActivity {
-    private SharedPreferences sharedPreferences;
+    private ActivityMypageBinding binding;
     private String token;
-    private TextView usernameText;
-    private ImageView settingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mypage);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_mypage);
 
-        settingView = findViewById(R.id.imageView4);
-
-        Intent intent = getIntent();
-        token = intent.getStringExtra("token");
-        Log.d("Mypage token ", token);
-
-        usernameText = findViewById(R.id.user_name);
+        token = TokenData.getInstance().getToken();
 
         RecyclerView recyclerView = findViewById(R.id.my_recycler_view);
         // 레이아웃 매니저로 LinearLayoutManager를 설정
@@ -63,7 +58,7 @@ public class MypageActivity extends AppCompatActivity {
         UpdateRecyclerAdapter adapter = new UpdateRecyclerAdapter(dataList);
         recyclerView.setAdapter(adapter);
 
-        settingView.setOnClickListener(new View.OnClickListener() {
+        binding.settingView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent settingIntent = new Intent(MypageActivity.this, SettingsActivity.class);
@@ -85,10 +80,10 @@ public class MypageActivity extends AppCompatActivity {
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("Response (body)", String.valueOf(response.body()));
-                Log.d("Response (code)", String.valueOf(response.code()));
-                Log.d("Response (message)", String.valueOf(response.message()));
-                Log.d("Response (isSuccessful)", String.valueOf(response.isSuccessful()));
+                Log.d("MyPage_Response (body)", String.valueOf(response.body()));
+                Log.d("MyPage_Response (code)", String.valueOf(response.code()));
+                Log.d("MyPage_Response (mess)", String.valueOf(response.message()));
+                Log.d("MyPage_Response (isSu)", String.valueOf(response.isSuccessful()));
 
                 JSONObject usernameResponse = null;
                 try {
@@ -99,12 +94,13 @@ public class MypageActivity extends AppCompatActivity {
                 String username = null;
                 try {
                     username = usernameResponse.getString("username");
+                    setUsernameTV(username);
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.d("mypage_username", username);
-
-                setUsernameTV(username);
             }
 
             @Override
@@ -118,7 +114,7 @@ public class MypageActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                usernameText.setText(username);
+                binding.usernameText.setText(username);
             }
         });
     }
