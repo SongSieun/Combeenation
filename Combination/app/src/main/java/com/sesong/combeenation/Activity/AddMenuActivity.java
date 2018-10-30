@@ -15,10 +15,12 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
+
 import com.sesong.combeenation.R;
 import com.sesong.combeenation.databinding.ActivityAddmenuBinding;
 
 import java.io.ByteArrayOutputStream;
+
 import static android.graphics.Bitmap.*;
 
 public class AddMenuActivity extends AppCompatActivity {
@@ -86,7 +88,7 @@ public class AddMenuActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case 7000:
-                    String finalImageString = sendPicture(data.getData()); //갤러리에서 가져오기
+                    String finalImageString = sendPicture(data.getData()); //갤러리에서 가져오기 // NullPointer
                     Log.d("AddMenuIntentData  ", finalImageString);
                     break;
             }
@@ -99,7 +101,7 @@ public class AddMenuActivity extends AppCompatActivity {
         //경로를 통해 비트맵으로 전환
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         Log.d("AddMenuBitmap  ", String.valueOf(bitmap));
-        imageString = getStringFromBitmap(bitmap);
+        imageString = getStringFromBitmap(bitmap);  // NullPointer
         Log.d("AddMenuLog  ", imageString);
 
         return imageString;
@@ -107,39 +109,13 @@ public class AddMenuActivity extends AppCompatActivity {
 
     // 비트맵 -> 스트링
     private String getStringFromBitmap(Bitmap bitmapPicture) {
+        Log.d("AddMenuBitmap ", String.valueOf(bitmapPicture));
         final int COMPRESSION_QUALITY = 100;
-        String encodedImage;
         ByteArrayOutputStream byteArrayBitmapStream = new ByteArrayOutputStream();
-        bitmapPicture.compress(CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream);
+        bitmapPicture.compress(CompressFormat.PNG, COMPRESSION_QUALITY, byteArrayBitmapStream); // NullPointer
         byte[] b = byteArrayBitmapStream.toByteArray();
-        encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+        String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
         return encodedImage;
-    }
-
-    private Bitmap getBitmapFromString(String jsonString) {
-        byte[] decodedString = Base64.decode(jsonString, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        return decodedByte;
-    }
-
-    private int exifOrientationToDegrees(int exifOrientation) {
-        if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
-            return 90;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {
-            return 180;
-        } else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {
-            return 270;
-        }
-        return 0;
-    }
-
-    private Bitmap rotate(Bitmap src, float degree) {
-        // Matrix 객체 생성
-        Matrix matrix = new Matrix();
-        // 회전 각도 셋팅
-        matrix.postRotate(degree);
-        // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-        return createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
     }
 
     private String getRealPathFromURI(Uri contentUri) {
@@ -149,7 +125,6 @@ public class AddMenuActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         }
-
         return cursor.getString(column_index);
     }
 }

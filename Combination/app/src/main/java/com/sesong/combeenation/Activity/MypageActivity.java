@@ -50,10 +50,10 @@ public class MypageActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         // 표시할 임시 데이터
         List<CardItem> dataList = new ArrayList<>();
-        dataList.add(new CardItem("첫번째 아이템", "안드로이드1 입니다"));
-        dataList.add(new CardItem("두번째 아이템", "안드로이드2 입니다"));
-        dataList.add(new CardItem("세번째 아이템", "안드로이드3 입니다"));
-        dataList.add(new CardItem("네번째 아이템", "안드로이드4 입니다"));
+        dataList.add(new CardItem("첫번째 아이템", "안드로이드1 입니다", R.drawable.picture));
+        dataList.add(new CardItem("두번째 아이템", "안드로이드2 입니다", R.drawable.picture));
+        dataList.add(new CardItem("세번째 아이템", "안드로이드3 입니다", R.drawable.picture));
+        dataList.add(new CardItem("네번째 아이템", "안드로이드4 입니다", R.drawable.picture));
         // 어댑터 설정
         UpdateRecyclerAdapter adapter = new UpdateRecyclerAdapter(dataList);
         recyclerView.setAdapter(adapter);
