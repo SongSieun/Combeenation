@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.MyRecyclerAdapter;
 import com.sesong.combeenation.R;
 import com.sesong.combeenation.TokenData;
-import com.sesong.combeenation.databinding.FragmentFoodBinding;
+import com.sesong.combeenation.databinding.FragmentBeautyBinding;
 import com.sesong.combeenation.item.CardItem;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
@@ -34,9 +34,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BeautyFragment extends Fragment {
-    private String type = "beauty";
+    private String type = "food";
     private List<CardItem> dataList;
-    private FragmentFoodBinding binding;
+    private FragmentBeautyBinding binding;
 
     @Nullable
     @Override
@@ -47,6 +47,9 @@ public class BeautyFragment extends Fragment {
         binding.recyclerView.setLayoutManager(layoutManager);
 
         dataList = new ArrayList<>();
+
+        dataList.add(new CardItem("qwer", "Qwer"));
+        binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
 
         String token = TokenData.getInstance().getToken();
         Log.d("Beauty Fragment token ", token);
@@ -84,9 +87,6 @@ public class BeautyFragment extends Fragment {
                     Log.d("typeString ", type);
                     String combination = String.valueOf(itemObject.get("combination"));
                     Log.d("combinationString ", combination);
-
-                    dataList.add(new CardItem(name, combination, image));
-                    binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
                 }
             }
 

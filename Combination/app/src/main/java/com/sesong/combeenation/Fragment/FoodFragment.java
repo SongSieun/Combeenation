@@ -47,7 +47,6 @@ public class FoodFragment extends Fragment {
         binding.recyclerView.setLayoutManager(layoutManager);
 
         dataList = new ArrayList<>();
-
         String token = TokenData.getInstance().getToken();
         Log.d("Food Fragment token ", token); // NullPointer
         getCombination(token);
@@ -86,8 +85,7 @@ public class FoodFragment extends Fragment {
                     Log.d("combinationString ", combination);
 
                     dataList.add(new CardItem(name, combination));
-                    MyRecyclerAdapter adapter = new MyRecyclerAdapter(dataList);
-                    binding.recyclerView.setAdapter(adapter);
+                    binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
                 }
             }
 

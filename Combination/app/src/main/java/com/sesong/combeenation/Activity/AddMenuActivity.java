@@ -99,7 +99,9 @@ public class AddMenuActivity extends AppCompatActivity {
         String imagePath = getRealPathFromURI(imgUri); // path 경로
         Log.d("AddMenuRealPath  ", imagePath);
         //경로를 통해 비트맵으로 전환
-        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options); // NULL
         Log.d("AddMenuBitmap  ", String.valueOf(bitmap));
         imageString = getStringFromBitmap(bitmap);  // NullPointer
         Log.d("AddMenuLog  ", imageString);
@@ -107,6 +109,7 @@ public class AddMenuActivity extends AppCompatActivity {
         return imageString;
     }
 
+    // 파일 경로를 사용하여 파일 유형을 만들면 파일에서 비트 맵을 만들고 setImageBitmap
     // 비트맵 -> 스트링
     private String getStringFromBitmap(Bitmap bitmapPicture) {
         Log.d("AddMenuBitmap ", String.valueOf(bitmapPicture));

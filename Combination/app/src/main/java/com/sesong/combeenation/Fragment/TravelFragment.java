@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import com.sesong.combeenation.Adapter.MyRecyclerAdapter;
 import com.sesong.combeenation.R;
 import com.sesong.combeenation.TokenData;
-import com.sesong.combeenation.databinding.FragmentFoodBinding;
+import com.sesong.combeenation.databinding.FragmentTravelBinding;
 import com.sesong.combeenation.item.CardItem;
 import com.sesong.combeenation.retrofit.RetrofitService;
 
@@ -34,14 +34,14 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TravelFragment extends Fragment {
-    private String type = "trip";
+    private String type = "food";
     private List<CardItem> dataList;
-    private FragmentFoodBinding binding;
+    private FragmentTravelBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_food, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_travel, container, false);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -86,8 +86,7 @@ public class TravelFragment extends Fragment {
                     Log.d("combinationString ", combination);
 
                     dataList.add(new CardItem(name, combination));
-                    MyRecyclerAdapter adapter = new MyRecyclerAdapter(dataList);
-                    binding.recyclerView.setAdapter(adapter);
+                    binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
                 }
             }
 
