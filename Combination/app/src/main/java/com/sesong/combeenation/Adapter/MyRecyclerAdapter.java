@@ -36,6 +36,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         CardItem item = mDataList.get(position);
         holder.title.setText(item.getTitle());
         holder.contents.setText(item.getContents());
+        holder.imageView.setImageResource(item.getImage());
     }
 
     @Override
@@ -46,11 +47,13 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView contents;
+        ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title_text);
             contents = itemView.findViewById(R.id.content_text);
+            imageView = itemView.findViewById(R.id.itemImage);
         }
     }
 }

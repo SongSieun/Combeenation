@@ -34,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BeautyFragment extends Fragment {
-    private String type = "food";
+    private String type = "beauty";
     private List<CardItem> dataList;
     private FragmentBeautyBinding binding;
 
@@ -47,10 +47,6 @@ public class BeautyFragment extends Fragment {
         binding.recyclerView.setLayoutManager(layoutManager);
 
         dataList = new ArrayList<>();
-
-        dataList.add(new CardItem("qwer", "Qwer"));
-        binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
-
         String token = TokenData.getInstance().getToken();
         Log.d("Beauty Fragment token ", token);
         getCombination(token);
@@ -79,14 +75,17 @@ public class BeautyFragment extends Fragment {
                 for (int i = 0; i < typeContent.size(); i++){
                     JsonObject itemObject = (JsonObject) typeContent.get(i);
                     Log.d("itemObject ", String.valueOf(itemObject));
-                    Bitmap image = getBitmapFromString(String.valueOf(itemObject.get("image")));
-                    Log.d("imageString ", String.valueOf(image));
+                    //Bitmap image = getBitmapFromString(String.valueOf(itemObject.get("image")));
+                    // Log.d("imageString ", String.valueOf(image));
                     String name = String.valueOf(itemObject.get("name"));
                     Log.d("nameString ", name);
                     String type = String.valueOf(itemObject.get("type"));
                     Log.d("typeString ", type);
                     String combination = String.valueOf(itemObject.get("combination"));
                     Log.d("combinationString ", combination);
+
+                    dataList.add(new CardItem(name, combination, R.drawable.beauty));
+                    binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
                 }
             }
 
@@ -98,9 +97,9 @@ public class BeautyFragment extends Fragment {
         });
     }
 
-    private Bitmap getBitmapFromString(String jsonString) {
+    /*private Bitmap getBitmapFromString(String jsonString) {
         byte[] decodedString = Base64.decode(jsonString, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
-    }
+    }*/
 }

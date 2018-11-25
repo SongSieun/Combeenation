@@ -15,6 +15,7 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.sesong.combeenation.R;
 import com.sesong.combeenation.databinding.ActivityAddmenuBinding;
@@ -34,10 +35,11 @@ public class AddMenuActivity extends AppCompatActivity {
         binding.searchImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
+                Toast.makeText(AddMenuActivity.this, "이미지 업로드 기능은 준비중입니다.", Toast.LENGTH_SHORT).show();
+                /*Intent intent = new Intent(Intent.ACTION_PICK);
                 intent.setDataAndType(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 Log.d("AddMenuIntent  ", String.valueOf(intent));
-                startActivityForResult(intent, 7000);
+                startActivityForResult(intent, 7000);*/
             }
         });
         binding.returnBtn.setOnClickListener(new View.OnClickListener() {

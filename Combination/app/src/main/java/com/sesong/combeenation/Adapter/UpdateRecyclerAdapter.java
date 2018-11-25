@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sesong.combeenation.R;
@@ -31,6 +32,7 @@ public class UpdateRecyclerAdapter extends RecyclerView.Adapter<UpdateRecyclerAd
         CardItem item = mDataList.get(position);
         holder.title.setText(item.getTitle());
         holder.contents.setText(item.getContents());
+        holder.imageView.setImageResource(item.getImage());
     }
 
     // 아이템의 수
@@ -44,11 +46,13 @@ public class UpdateRecyclerAdapter extends RecyclerView.Adapter<UpdateRecyclerAd
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         TextView contents;
+        ImageView imageView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.my_title_text);
             contents = itemView.findViewById(R.id.my_content_text);
+            imageView = itemView.findViewById(R.id.updateImage);
         }
     }
 }

@@ -75,8 +75,8 @@ public class FoodFragment extends Fragment {
                 for (int i = 0; i < typeContent.size(); i++){
                     JsonObject itemObject = (JsonObject) typeContent.get(i);
                     Log.d("itemObject ", String.valueOf(itemObject));
-                    String image = String.valueOf(itemObject.get("image"));
-                    Log.d("imageString ", image);
+                    // String image = String.valueOf(itemObject.get("image"));
+                    // Log.d("imageString ", image);
                     String name = String.valueOf(itemObject.get("name"));
                     Log.d("nameString ", name);
                     String type = String.valueOf(itemObject.get("type"));
@@ -84,7 +84,7 @@ public class FoodFragment extends Fragment {
                     String combination = String.valueOf(itemObject.get("combination"));
                     Log.d("combinationString ", combination);
 
-                    dataList.add(new CardItem(name, combination));
+                    dataList.add(new CardItem(name, combination, R.drawable.picture));
                     binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
                 }
             }
@@ -97,9 +97,9 @@ public class FoodFragment extends Fragment {
         });
     }
 
-    private Bitmap getBitmapFromString(String jsonString) {
+    /*private Bitmap getBitmapFromString(String jsonString) {
         byte[] decodedString = Base64.decode(jsonString, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
-    }
+    }*/
 }

@@ -1,22 +1,12 @@
 package com.sesong.combeenation.retrofit;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
-import java.io.File;
-
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface RetrofitService {
@@ -39,11 +29,11 @@ public interface RetrofitService {
             @Header("token") String token);
 
     @FormUrlEncoded
-    @POST("/combination")
+    @POST("/combinations")
     Call<JsonObject> combinations(
             @Header("token") String token,
             @Field("name") String name,
-            @Field("image") String image,
+            // @Field("image") String image,
             @Field("combination") String combination,
             @Field("type") String type);
 

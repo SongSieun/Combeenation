@@ -34,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TravelFragment extends Fragment {
-    private String type = "food";
+    private String type = "trip";
     private List<CardItem> dataList;
     private FragmentTravelBinding binding;
 
@@ -76,8 +76,8 @@ public class TravelFragment extends Fragment {
                 for (int i = 0; i < typeContent.size(); i++){
                     JsonObject itemObject = (JsonObject) typeContent.get(i);
                     Log.d("itemObject ", String.valueOf(itemObject));
-                    String image = String.valueOf(itemObject.get("image"));
-                    Log.d("imageString ", image);
+                    /*String image = String.valueOf(itemObject.get("image"));
+                    Log.d("imageString ", image);*/
                     String name = String.valueOf(itemObject.get("name"));
                     Log.d("nameString ", name);
                     String type = String.valueOf(itemObject.get("type"));
@@ -85,7 +85,7 @@ public class TravelFragment extends Fragment {
                     String combination = String.valueOf(itemObject.get("combination"));
                     Log.d("combinationString ", combination);
 
-                    dataList.add(new CardItem(name, combination));
+                    dataList.add(new CardItem(name, combination, R.drawable.trip));
                     binding.recyclerView.setAdapter(new MyRecyclerAdapter(getActivity().getApplicationContext(),dataList));
                 }
             }
@@ -98,9 +98,9 @@ public class TravelFragment extends Fragment {
         });
     }
 
-    private Bitmap getBitmapFromString(String jsonString) {
+    /*private Bitmap getBitmapFromString(String jsonString) {
         byte[] decodedString = Base64.decode(jsonString, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
-    }
+    }*/
 }

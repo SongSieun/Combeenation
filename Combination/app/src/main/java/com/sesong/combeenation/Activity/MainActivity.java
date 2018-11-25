@@ -37,7 +37,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "TAG";
-    private String menuTitle, menuContent, menuType, token, imageString;
+    private String menuTitle, menuContent, menuType, token;
+    // private String imageString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +63,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void addMenu(String name, String image, String combination, String type) {
+    public void addMenu(String name, String combination, String type) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
-        final Call<JsonObject> response = retrofitService.combinations(token, name, image, combination, type);
+        final Call<JsonObject> response = retrofitService.combinations(token, name, combination, type);
         response.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -95,12 +96,12 @@ public class MainActivity extends AppCompatActivity {
                     menuTitle = data.getStringExtra("menuTitle");
                     menuContent = data.getStringExtra("menuContent");
                     menuType = data.getStringExtra("menuType");
-                    imageString = data.getStringExtra("imageString");
+                    // imageString = data.getStringExtra("imageString");
                     Log.d("menuTitleMaIn ", menuTitle);
                     Log.d("menuContentMaIn ", menuContent);
                     Log.d("menuTypeMaIn ", menuType);
-                    Log.d("imagePathMaIn ", imageString);
-                    addMenu(menuTitle, imageString, menuContent, menuType);
+                    // Log.d("imagePathMaIn ", imageString);
+                    addMenu(menuTitle, menuContent, menuType);
 
                     break;
             }
